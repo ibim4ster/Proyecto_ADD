@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 /**
  * Crear la conexión con ConexionDB y Connection
- * @author Andreaa
+ * @author Andrea
  */
 public class AccesoDAO {
     private static ConexionDB con;
