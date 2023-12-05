@@ -18,7 +18,7 @@ public class ConexionDB {
 
     // si no funciona la conexión con la primera, usar la segunda URL
     //private static final String URL = "jdbc:mysql://localhost:3306/acceso_datos";
-    private static final String URL = "jdbc:mysql://localhost:3306/acceso_datos?useSSL=false&allowPublicKeyRetrieval=true";
+    private static final String URL = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&allowPublicKeyRetrieval=true";
 
     private static final String USER = "root";
     private static final String PASSWORD = "root";

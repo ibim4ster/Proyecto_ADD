@@ -35,7 +35,7 @@ public class AccesoDAO {
         try {
             System.out.println("En metodo extraerEmp");
             // Crear una sentencia SQL para seleccionar todos los datos de la tabla empleados
-            String sql = "SELECT * FROM empleados";
+            String sql = "SELECT * FROM empleadosa";
 
             // Crear un Statement para ejecutar la consulta SQL
             Statement statement = conexion.createStatement();
@@ -47,16 +47,16 @@ public class AccesoDAO {
             while (resultSet.next()) {
                 System.out.println("Tenemos registros");
                 
-                int id = resultSet.getInt("ID");
-                String nombre = resultSet.getString("NOMBRE");
-                String apellido = resultSet.getString("APELLIDO");
-                String DNI = resultSet.getString("DNI");
-                Date fecha_contr = resultSet.getDate("FECHA_CONTRATACION");
-                String puesto = resultSet.getString("PUESTO");
+                int id = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                String apellido = resultSet.getString(3);
+                String DNI = resultSet.getString(4);
+                Date fecha_contr = resultSet.getDate(5);
+                String puesto = resultSet.getString(6);
 
                 // Aquí puedes procesar los datos como desees, por ejemplo, imprimirlos en la consola
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Apellido: " + apellido +
-                        DNI + fecha_contr.toString() + puesto);
+                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Apellido: " + apellido +", DNI: "+
+                        DNI +", Fecha contrato: "+ fecha_contr.toString() +", Puesto: " +puesto);
                 // Puedes imprimir otras columnas aquí si las tienes en tu tabla
             }
 
