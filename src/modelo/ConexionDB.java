@@ -30,7 +30,7 @@ public class ConexionDB {
 
     public Connection getConnection() {
         if (conexion == null) {
-            System.out.println("Hola");
+            System.out.println("INTENTO");
 
             try {
                 conexion = DriverManager.getConnection(URL, USER, PASSWORD);

@@ -4,6 +4,12 @@
  */
 package modelo;
 
+import vista.VistaRun;
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 /**
  * Clase de ejemplo para crear un AccesoDAO y comprobar que se conecta
@@ -11,7 +17,10 @@ package modelo;
  */
 public class RunEj {
     public static void main(String[] args) {
+        //VistaRun vista = new VistaRun();
         AccesoDAO ad = new AccesoDAO();
+        ad.extraerDatosEmpleados();
+
 
     }
 
