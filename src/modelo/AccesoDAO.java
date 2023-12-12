@@ -6,20 +6,22 @@ package modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
-
+import java.sql.Date;
 
 /**
  * Crear la conexión con ConexionDB y Connection
+ *
  * @author Andrea
  */
 public class AccesoDAO {
+
     static ConexionDB con;
     static Connection conexion;
-    
+
     public AccesoDAO() {
         con = new ConexionDB();
         conexion = (Connection) con.getConnection();
@@ -30,7 +32,7 @@ public class AccesoDAO {
         }
         //con.desconectar();
     }
-    
+
     public void extraerDatosEmpleados() {
         try {
             System.out.println("En metodo extraerEmp");
@@ -46,7 +48,7 @@ public class AccesoDAO {
             // Iterar a través del ResultSet e imprimir los datos de cada empleado
             while (resultSet.next()) {
                 System.out.println("Tenemos registros");
-                
+
                 int id = resultSet.getInt(1);
                 String nombre = resultSet.getString(2);
                 String apellido = resultSet.getString(3);
@@ -55,8 +57,8 @@ public class AccesoDAO {
                 String puesto = resultSet.getString(6);
 
                 // Aquí puedes procesar los datos como desees, por ejemplo, imprimirlos en la consola
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Apellido: " + apellido +", DNI: "+
-                        DNI +", Fecha contrato: "+ fecha_contr.toString() +", Puesto: " +puesto);
+                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Apellido: " + apellido + ", DNI: "
+                        + DNI + ", Fecha contrato: " + fecha_contr.toString() + ", Puesto: " + puesto);
                 // Puedes imprimir otras columnas aquí si las tienes en tu tabla
             }
 
@@ -70,7 +72,8 @@ public class AccesoDAO {
             // Manejar cualquier excepción que pueda ocurrir durante la extracción de datos
         }
     }
-        public void extraerDatosIngresoRegistro() {
+
+    public void extraerDatosIngresoRegistro() {
         try {
             System.out.println("En metodo extraerIng");
             // Crear una sentencia SQL para seleccionar todos los datos de la tabla empleados
@@ -85,15 +88,14 @@ public class AccesoDAO {
             // Iterar a través del ResultSet e imprimir los datos de cada empleado
             while (resultSet.next()) {
                 System.out.println("Tenemos registros");
-                
+
                 int id = resultSet.getInt(1);
                 int idEmple = resultSet.getInt(2);
                 Date fechaEntrada = resultSet.getDate(3);
                 Date fechaSalida = resultSet.getDate(4);
-                
 
                 // Aquí puedes procesar los datos como desees, por ejemplo, imprimirlos en la consola
-                System.out.println("ID: " + id + ", ID Empleado: " + idEmple + ", Fecha de entara: "+fechaEntrada+", Fecha de salida: "+fechaSalida);
+                System.out.println("ID: " + id + ", ID Empleado: " + idEmple + ", Fecha de entara: " + fechaEntrada + ", Fecha de salida: " + fechaSalida);
                 // Puedes imprimir otras columnas aquí si las tienes en tu tabla
             }
 
@@ -107,7 +109,8 @@ public class AccesoDAO {
             // Manejar cualquier excepción que pueda ocurrir durante la extracción de datos
         }
     }
-          public void extraerRegistroFaltas() {
+
+    public void extraerRegistroFaltas() {
         try {
             System.out.println("En metodo extraerExt");
             // Crear una sentencia SQL para seleccionar todos los datos de la tabla empleados
@@ -122,14 +125,13 @@ public class AccesoDAO {
             // Iterar a través del ResultSet e imprimir los datos de cada empleado
             while (resultSet.next()) {
                 System.out.println("Tenemos registros");
-                
+
                 int id = resultSet.getInt(1);
                 int idEmple = resultSet.getInt(2);
                 int diasFaltados = resultSet.getInt(3);
-                
 
                 // Aquí puedes procesar los datos como desees, por ejemplo, imprimirlos en la consola
-                System.out.println("ID: " + id + ", ID Empleado: " + idEmple + ", Dias faltados: "+diasFaltados);
+                System.out.println("ID: " + id + ", ID Empleado: " + idEmple + ", Dias faltados: " + diasFaltados);
                 // Puedes imprimir otras columnas aquí si las tienes en tu tabla
             }
 
@@ -143,5 +145,51 @@ public class AccesoDAO {
             // Manejar cualquier excepción que pueda ocurrir durante la extracción de datos
         }
     }
-    
+
+    public void insertarFalta(int id, int idEmpleado, int totalDiasFaltados) {
+        try {
+            String queryINSERT = "INSERT INTO registro_faltas(ID, ID_EMPLEADO, TOTAL_DIAS_FALTADOS) VALUES(?, ?, ?);";
+            // Crear un PreparedStatement para ejecutar la consulta SQL
+            PreparedStatement sentencia = conexion.prepareStatement(queryINSERT);
+            // Setear los valores de la consulta
+            sentencia.setInt(1, id);
+            sentencia.setInt(2, idEmpleado);
+            sentencia.setInt(3, totalDiasFaltados);
+
+            // Ejecutar la consulta de inserción
+            int filasAfectadas = sentencia.executeUpdate();
+            System.out.println("Filas afectadas: " + filasAfectadas);
+
+            // Cerrar el PreparedStatement
+            sentencia.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertarEmpleado(int id, String nombre, String apellido, String DNI, Date Fecha_contratacion, String puesto) {
+        try {
+            String queryINSERT = "INSERT INTO empleadosa(ID, NOMBRE, APELLIDO, DNI, FECHA_CONTRATACION, PUESTO) VALUES(?, ?, ?, ? ,? ,?);";
+            // Crear un PreparedStatement para ejecutar la consulta SQL
+            PreparedStatement sentencia = conexion.prepareStatement(queryINSERT);
+            // Setear los valores de la consulta
+            sentencia.setInt(1, id);
+            sentencia.setString(2, nombre);
+            sentencia.setString(3, apellido);
+            sentencia.setString(4, DNI);
+            sentencia.setDate(5, (java.sql.Date) Fecha_contratacion);
+            sentencia.setString(6, puesto);
+            // Ejecutar la consulta de inserción
+            int filasAfectadas = sentencia.executeUpdate();
+            System.out.println("Filas afectadas: " + filasAfectadas);
+
+            // Cerrar el PreparedStatement
+            sentencia.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
