@@ -168,9 +168,9 @@ public class AccesoDAO {
         }
     }
 
-    public void insertarEmpleado(int id, String nombre, String apellido, String DNI, Date Fecha_contratacion, String puesto) {
+    public void insertarEmpleado(int id, String nombre, String apellido, String DNI, String puesto) {
         try {
-            String queryINSERT = "INSERT INTO empleadosa(ID, NOMBRE, APELLIDO, DNI, FECHA_CONTRATACION, PUESTO) VALUES(?, ?, ?, ? ,? ,?);";
+            String queryINSERT = "INSERT INTO empleadosa(ID, NOMBRE, APELLIDO, DNI, FECHA_CONTRATACION, PUESTO) VALUES(?, ?, ?, ? ,NOW() ,?);";
             // Crear un PreparedStatement para ejecutar la consulta SQL
             PreparedStatement sentencia = conexion.prepareStatement(queryINSERT);
             // Setear los valores de la consulta
@@ -178,8 +178,8 @@ public class AccesoDAO {
             sentencia.setString(2, nombre);
             sentencia.setString(3, apellido);
             sentencia.setString(4, DNI);
-            sentencia.setDate(5, (java.sql.Date) Fecha_contratacion);
-            sentencia.setString(6, puesto);
+//            sentencia.setDate(5, (java.sql.Date) Fecha_contratacion);
+            sentencia.setString(5, puesto);
             // Ejecutar la consulta de inserción
             int filasAfectadas = sentencia.executeUpdate();
             System.out.println("Filas afectadas: " + filasAfectadas);
