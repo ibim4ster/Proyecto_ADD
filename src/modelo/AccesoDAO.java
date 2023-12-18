@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -191,5 +192,25 @@ public class AccesoDAO {
             e.printStackTrace();
         }
     }
+  public void insertarIngreso(int id, int idEmpleado, Timestamp fechaEntrada, Timestamp fechaSalida) {
+        try {
+            String queryINSERT = "INSERT INTO ingreso_registro(ID, ID_EMPLEADO ,FECHA_HORA_INGRESO, FECHA_HORA_SALIDA) VALUES(?, ?, ? ,?);";
+            // Crear un PreparedStatement para ejecutar la consulta SQL
+            PreparedStatement sentencia = conexion.prepareStatement(queryINSERT);
+            // Setear los valores de la consulta
+            sentencia.setInt(1, id);
+            sentencia.setInt(2, idEmpleado);
+            sentencia.setTimestamp(3, fechaEntrada);
+            sentencia.setTimestamp(4, fechaSalida);
+            // Ejecutar la consulta de inserción
+            int filasAfectadas = sentencia.executeUpdate();
+            System.out.println("Filas afectadas: " + filasAfectadas);
 
+            // Cerrar el PreparedStatement
+            sentencia.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
